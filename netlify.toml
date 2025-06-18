@@ -1,0 +1,31 @@
+# Netlify configuration file
+
+# Build settings
+[build]
+  # Directory to publish (the output of npm run build)
+  publish = "dist"
+  # Build command
+  command = "npm run build"
+
+# Redirects for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables will be set in Netlify dashboard
+[build.environment]
+  # Production build mode
+  NODE_ENV = "production"
+
+# Headers to set on files
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover
+  for = "/*"
+    [headers.values]
+    # Multi-key header rules
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    Content-Security-Policy = "default-src 'self' https://apis.google.com https://*.firebaseio.com https://*.googleapis.com; img-src 'self' data: https://*.cloudfront.net https://firebasestorage.googleapis.com; script-src 'self' 'unsafe-inline' https://*.firebaseio.com https://*.googleapis.com; style-src 'self' 'unsafe-inline';"
