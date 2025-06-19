@@ -17,6 +17,8 @@
 [build.environment]
   # Production build mode
   NODE_ENV = "production"
+  # Specify Node.js version
+  NODE_VERSION = "18.18.0"
 
 # Headers to set on files
 [[headers]]
