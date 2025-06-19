@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { AnimatePresence } from 'framer-motion';
 
 // Pages
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Editor from './pages/Editor';
 import StudyMode from './pages/StudyMode';
+import AuthDebug from './pages/AuthDebug';
 
 // Context Providers
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -61,15 +63,12 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         {/* Public routes */}
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/auth-debug" element={<AuthDebug />} />
         
         {/* Protected routes */}
-        <Route path="/" element={
-          <ProtectedRoute>
-            <Navigate to="/dashboard" replace />
-          </ProtectedRoute>
-        } />
         
         <Route path="/dashboard" element={
           <ProtectedRoute>

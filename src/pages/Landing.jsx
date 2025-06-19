@@ -1,0 +1,234 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
+import AppPreviewCards from './AppPreviewCards';
+
+const Landing = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const heroRef = useRef(null);
+  const isHeroInView = useInView(heroRef, { once: true });
+
+  useEffect(() => {
+    // Function to handle scroll
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 50) {
+        document.querySelector('nav')?.classList.add('bg-opacity-90');
+      } else {
+        document.querySelector('nav')?.classList.remove('bg-opacity-90');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Make content visible after a small delay for animation
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 300);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // Features section data
+  const features = [
+    {
+      title: 'AI-Powered Notes',
+      description: 'Leverage artificial intelligence to enhance your note-taking experience',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      )
+    },
+    {
+      title: 'Study Mode',
+      description: 'Transform your notes into effective study materials with our dedicated study mode',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      )
+    },
+    {
+      title: 'Dark Mode',
+      description: 'Reduce eye strain with our beautiful dark mode designed for day and night use',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      )
+    },
+    {
+      title: 'Cross-Platform',
+      description: 'Access your notes from anywhere with our web, desktop, and mobile applications',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+        </svg>
+      )
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-gray-900 to-black text-white font-[SF-Pro-Display,system-ui,sans-serif] overflow-x-hidden">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-opacity-50 backdrop-blur-md bg-gray-900/60 border-b border-gray-800/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Link to="/" className="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-300 italic" style={{ fontFamily: "'Playfair Display', serif" }}>
+                renotefy
+              </Link>
+            </div>
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-center space-x-4">
+                <Link to="/register" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Sign Up
+                </Link>
+                <Link to="/login" className="text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-colors">
+                  Login
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div ref={heroRef} className="relative pt-28 pb-16 md:pt-36 md:pb-24 flex flex-col items-center justify-center px-4">
+        {/* Subtle background accent */}
+        <div className="absolute top-24 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute top-48 right-1/4 w-72 h-72 bg-pink-500/10 rounded-full filter blur-3xl"></div>
+        
+        <motion.div 
+          className="text-center max-w-4xl mx-auto relative z-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            Making your notes{' '}
+            <span 
+              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-pink-400"
+              style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+            >
+              smarter
+            </span>
+            <br />with <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-pink-400" style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}>renotefy</span>
+          </h1>
+          <p className="text-base md:text-xl mt-6 text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Your personal space for notes, ideas, and everything in between.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+            <Link to="/register">
+              <motion.button 
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white font-medium text-base w-full sm:w-auto shadow-lg shadow-blue-500/20"
+                whileHover={{ scale: 1.02, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                Get Started
+              </motion.button>
+            </Link>
+            <Link to="/login">
+              <motion.button 
+                className="px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-sm text-white font-medium text-base border border-white/20 w-full sm:w-auto mt-3 sm:mt-0"
+                whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.15)" }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                Login
+              </motion.button>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* App Preview Cards */}
+        <div className="mt-20 pb-10 relative z-10">
+          <AppPreviewCards isVisible={isVisible} />
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-24 bg-gradient-to-b from-slate-900 via-gray-900 to-gray-950 relative">
+        {/* Accent background elements */}
+        <div className="absolute top-40 left-20 w-48 h-48 bg-blue-600/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-40 right-20 w-64 h-64 bg-pink-600/10 rounded-full filter blur-3xl"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold">Why choose Renotefy?</h2>
+            <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+              Streamline your note-taking experience with these powerful features
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <motion.div 
+                key={feature.title}
+                className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+                transition={{ duration: 0.6, delay: 0.5 + (index * 0.1) }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
+                <div className="text-blue-400 mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-gray-300">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Call to action */}
+      <div className="py-16 bg-gradient-to-b from-gray-950 to-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold">Ready to upgrade your note-taking?</h2>
+            <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+              Join thousands of users who are already enhancing their productivity with Renotefy
+            </p>
+            <div className="mt-10">
+              <Link to="/register">
+                <motion.button 
+                  className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium text-lg"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get Started Now
+                </motion.button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-black py-10 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-gray-400">© {new Date().getFullYear()} Renotefy. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Landing;

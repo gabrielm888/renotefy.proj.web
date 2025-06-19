@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        // Allow users to read/write only their own data
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    // Default rules for all other paths
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
