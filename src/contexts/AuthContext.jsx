@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signInWithPopup, 
+  signInWithRedirect, 
+  getRedirectResult,
   signOut, 
   onAuthStateChanged,
   updateProfile
@@ -106,65 +108,32 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login with Google
+  // Login with Google using redirect method
   const loginWithGoogle = async () => {
     try {
       setError('');
-      // Configure Google provider for better user experience
-      googleProvider.setCustomParameters({
-        prompt: 'select_account',
-      });
-      // Configure Google provider to request additional scopes
+      
+      // Set custom parameters for Google sign-in
+      googleProvider.setCustomParameters({ prompt: 'select_account' });
+      
+      // Add scopes for additional permissions if needed
       googleProvider.addScope('email');
       googleProvider.addScope('profile');
       
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      console.log('Google auth successful:', user);
-
-      try {
-        // Check if user exists in Firestore
-        const userDoc = await getDoc(doc(firestore, 'users', user.uid));
-        
-        // If user doesn't exist, create a new document
-        if (!userDoc.exists()) {
-          // Extract username from email, ensure it's unique
-          const baseUsername = user.email.split('@')[0];
-          const uniqueUsername = `${baseUsername}_${Date.now().toString().slice(-4)}`;
-          
-          const userData = {
-            uid: user.uid,
-            email: user.email,
-            fullName: user.displayName || '',
-            username: uniqueUsername,
-            createdAt: new Date().toISOString(),
-            photoURL: user.photoURL || '',
-          };
-          
-          console.log('Creating new user document with unique username:', userData);
-          
-          await setDoc(doc(firestore, 'users', user.uid), userData);
-        } else {
-          console.log('User document already exists');
-        }
-      } catch (firestoreError) {
-        console.error('Error with Firestore during Google auth:', firestoreError);
-        // Continue even if Firestore operations fail
-      }
+      // Sign in with redirect instead of popup
+      await signInWithRedirect(auth, googleProvider);
       
-      return user;
+      // The result will be handled in the useEffect hook for redirect results
+      return null;
     } catch (err) {
       console.error('Google login error:', err);
+      
+      // Handle specific Google sign-in errors with user-friendly messages
       if (err.code === 'auth/account-exists-with-different-credential') {
         setError('An account already exists with the same email address but different sign-in credentials. Please sign in using a different method.');
-      } else if (err.code === 'auth/popup-closed-by-user') {
-        setError('Sign-in was cancelled. Please try again.');
-      } else if (err.code === 'auth/cancelled-popup-request') {
-        setError('The sign-in process was cancelled. Please try again.');
       } else if (err.code === 'auth/unauthorized-domain') {
-        setError('This domain is not authorized for Google sign-in. Please add localhost to your Firebase authorized domains list.');
-        console.error('IMPORTANT: You need to add localhost to your Firebase console authorized domains!');
+        setError('This domain is not authorized for Google sign-in. Please check Firebase console authorized domains.');
+        console.error('IMPORTANT: You need to add your domain to your Firebase console authorized domains!');
       } else {
         setError(err.message || 'Failed to login with Google');
       }
@@ -177,6 +146,63 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // Handle Google redirect results
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        setLoading(true);
+        const result = await getRedirectResult(auth);
+        
+        if (result) {
+          const user = result.user;
+          console.log('Google sign-in redirect completed successfully:', user.uid);
+          
+          // Create or verify Firestore user document
+          try {
+            const docRef = doc(firestore, 'users', user.uid);
+            const docSnap = await getDoc(docRef);
+            
+            if (!docSnap.exists()) {
+              // Create user data if it doesn't exist
+              const userData = {
+                uid: user.uid,
+                email: user.email,
+                fullName: user.displayName || '',
+                username: `${user.email.split('@')[0]}_${Date.now().toString().slice(-4)}`,
+                createdAt: new Date().toISOString(),
+                photoURL: user.photoURL || '',
+              };
+              
+              await setDoc(docRef, userData);
+              console.log('User data created in Firestore for Google user after redirect');
+            } else {
+              console.log('User document already exists in Firestore');
+            }
+          } catch (firestoreErr) {
+            console.error('Error handling Firestore data after redirect:', firestoreErr);
+            // Continue even if Firestore operations fail
+          }
+        }
+      } catch (err) {
+        console.error('Error processing redirect result:', err);
+        
+        // Handle errors from redirect sign-in
+        if (err.code === 'auth/account-exists-with-different-credential') {
+          setError('An account already exists with the same email address but different sign-in credentials.');
+        } else if (err.code === 'auth/unauthorized-domain') {
+          setError('This domain is not authorized for Google sign-in. Please add your domain to Firebase authorized domains list.');
+          console.error(`IMPORTANT: You need to add ${window.location.hostname} to your Firebase authorized domains!`);
+        } else {
+          setError(err.message || 'Failed to complete Google sign-in');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    handleRedirectResult();
+  }, []);
+  
   // Listen for auth state changes
   useEffect(() => {
     console.log('Setting up auth state listener');

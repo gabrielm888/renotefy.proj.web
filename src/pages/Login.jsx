@@ -47,19 +47,21 @@ const Login = () => {
     }
   };
   
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
     setLocalError('');
     setAuthError(''); // Clear any previous auth errors
     setLoading(true);
     
     try {
+      // Start the Google login redirect flow
+      console.log('Starting Google sign-in redirect flow');
       await loginWithGoogle();
-      console.log('Google login successful, redirecting to dashboard');
-      navigate('/dashboard');
-    } catch (err) {
-      console.error('Google login error in component:', err);
-      setLocalError(err.message || 'Failed to log in with Google. Please try again.');
-    } finally {
+      // No navigation or state changes here
+      // The redirect will happen and the page will reload
+    } catch (error) {
+      console.error('Google login redirect error:', error);
+      setLocalError(error.message || 'Failed to start Google login flow');
       setLoading(false);
     }
   };
