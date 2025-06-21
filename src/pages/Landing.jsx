@@ -41,7 +41,8 @@ const Landing = () => {
         <motion.div
           initial="hidden"
           whileHover="visible"
-          animate="hidden"
+          animate="visible"
+          className="scale-110 hover:scale-125 transition-transform duration-300"
         >
           <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <motion.path 
@@ -92,7 +93,8 @@ const Landing = () => {
         <motion.div
           initial="hidden"
           whileHover="visible"
-          animate="hidden"
+          animate="visible"
+          className="scale-110 hover:scale-125 transition-transform duration-300"
         >
           <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <motion.path
@@ -158,7 +160,8 @@ const Landing = () => {
         <motion.div
           initial="hidden"
           whileHover="visible"
-          animate="hidden"
+          animate="visible"
+          className="scale-110 hover:scale-125 transition-transform duration-300"
         >
           <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <motion.path 
@@ -226,7 +229,8 @@ const Landing = () => {
         <motion.div
           initial="hidden"
           whileHover="visible"
-          animate="hidden"
+          animate="visible"
+          className="scale-110 hover:scale-125 transition-transform duration-300"
         >
           <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <motion.path 
@@ -321,22 +325,36 @@ const Landing = () => {
               <div className="ml-10 flex items-center space-x-4">
                 <Link to="/register">
                   <motion.span 
-                    className="text-sm text-gray-300 hover:text-white cursor-pointer px-3 py-1.5"
-                    whileHover={{ color: '#ffffff', scale: 1.05 }}
+                    className="text-sm text-gray-300 hover:text-white cursor-pointer px-3 py-1.5 relative overflow-hidden group"
+                    whileHover={{ color: '#ffffff', scale: 1.05, textShadow: '0 0 5px rgba(255,255,255,0.5)' }}
                     whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    transition={{ type: "spring", stiffness: 600, damping: 15 }}
                   >
+                    <motion.span 
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-pink-400 group-hover:w-full" 
+                      transition={{ duration: 0.3 }}
+                    />
                     Sign Up
                   </motion.span>
                 </Link>
                 <Link to="/login">
                   <motion.span 
-                    className="text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5"
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.2)" }}
+                    className="text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5 relative"
+                    whileHover={{ 
+                      scale: 1.05, 
+                      backgroundColor: "rgba(255,255,255,0.15)", 
+                      borderColor: "rgba(255,255,255,0.3)",
+                      boxShadow: "0 0 15px rgba(79, 209, 197, 0.3)"
+                    }}
                     whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    transition={{ type: "spring", stiffness: 600, damping: 15 }}
                   >
-                    Login
+                    <motion.span 
+                      initial={{ opacity: 0.8 }}
+                      whileHover={{ opacity: 1 }}
+                    >
+                      Login
+                    </motion.span>
                   </motion.span>
                 </Link>
               </div>
@@ -373,12 +391,24 @@ const Landing = () => {
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/register">
               <motion.button 
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white font-medium text-base w-full sm:w-auto shadow-lg shadow-blue-500/20"
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white font-medium text-base w-full sm:w-auto shadow-lg shadow-blue-500/20 relative overflow-hidden"
+                initial={{scale: 1}}
+                animate={{
+                  boxShadow: ["0 10px 15px -3px rgba(59, 130, 246, 0.3)", "0 15px 20px -3px rgba(59, 130, 246, 0.4)", "0 10px 15px -3px rgba(59, 130, 246, 0.3)"],
+                  transition: {
+                    boxShadow: {
+                      repeat: Infinity,
+                      duration: 1.5,
+                      ease: "easeInOut",
+                      repeatType: "reverse"
+                    }
+                  }
+                }}
                 whileHover={{ 
-                  scale: 1.04, 
-                  boxShadow: "0 15px 25px -5px rgba(59, 130, 246, 0.45)",
+                  scale: 1.05, 
+                  boxShadow: "0 20px 30px -5px rgba(59, 130, 246, 0.55)",
                   transition: { 
-                    duration: 0.3, 
+                    duration: 0.2, 
                     ease: "easeOut" 
                   } 
                 }}
@@ -388,36 +418,71 @@ const Landing = () => {
                 }}
                 transition={{ 
                   type: "spring", 
-                  stiffness: 400, 
-                  damping: 15 
+                  stiffness: 500, 
+                  damping: 12
                 }}
               >
-                Get Started
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/20 to-blue-500/0"
+                  animate={{
+                    x: ["-100%", "100%"],
+                    transition: {
+                      duration: 1.5,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatDelay: 0.5
+                    }
+                  }}
+                />
+                <span className="relative z-10">Get Started</span>
               </motion.button>
             </Link>
             <Link to="/login">
               <motion.button 
-                className="px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-sm text-white font-medium text-base border border-white/20 w-full sm:w-auto mt-3 sm:mt-0"
+                className="px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-sm text-white font-medium text-base border border-white/20 w-full sm:w-auto mt-3 sm:mt-0 relative overflow-hidden"
+                initial={{scale: 1}}
+                animate={{
+                  borderColor: ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.3)", "rgba(255,255,255,0.2)"],
+                  transition: {
+                    borderColor: {
+                      repeat: Infinity,
+                      duration: 2,
+                      ease: "easeInOut"
+                    }
+                  }
+                }}
                 whileHover={{ 
-                  scale: 1.04, 
+                  scale: 1.05, 
                   backgroundColor: "rgba(255,255,255,0.15)", 
-                  borderColor: "rgba(255,255,255,0.3)",
+                  borderColor: "rgba(255,255,255,0.4)",
+                  boxShadow: "0 0 20px rgba(255, 255, 255, 0.15)",
                   transition: { 
-                    duration: 0.3, 
+                    duration: 0.2, 
                     ease: "easeOut" 
                   } 
                 }}
                 whileTap={{ 
-                  scale: 0.97,
-                  backgroundColor: "rgba(255,255,255,0.12)"
+                  scale: 0.97
                 }}
                 transition={{ 
                   type: "spring", 
-                  stiffness: 400, 
-                  damping: 15 
+                  stiffness: 500, 
+                  damping: 12 
                 }}
               >
-                Login
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                  animate={{
+                    x: ["-100%", "100%"],
+                    transition: {
+                      duration: 2,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatDelay: 1
+                    }
+                  }}
+                />
+                <span className="relative z-10">Login</span>
               </motion.button>
             </Link>
           </div>
