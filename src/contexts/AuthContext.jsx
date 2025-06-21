@@ -110,12 +110,13 @@ export const AuthProvider = ({ children }) => {
   const loginWithGoogle = async () => {
     try {
       setError('');
+      // Configure Google provider for better user experience
+      googleProvider.setCustomParameters({
+        prompt: 'select_account',
+      });
       // Configure Google provider to request additional scopes
       googleProvider.addScope('email');
       googleProvider.addScope('profile');
-      googleProvider.setCustomParameters({
-        prompt: 'select_account'
-      });
       
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
@@ -253,6 +254,7 @@ export const AuthProvider = ({ children }) => {
     loginWithGoogle,
     logout,
     error,
+    setError, // Export setError to allow components to clear/set errors
     loading
   };
 
