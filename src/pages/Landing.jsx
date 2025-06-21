@@ -325,10 +325,25 @@ const Landing = () => {
               <div className="ml-10 flex items-center space-x-4">
                 <Link to="/register">
                   <motion.span 
-                    className="text-sm text-gray-300 hover:text-white cursor-pointer px-3 py-1.5 relative overflow-hidden group"
-                    whileHover={{ color: '#ffffff', scale: 1.05, textShadow: '0 0 5px rgba(255,255,255,0.5)' }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 600, damping: 15 }}
+                    className="text-sm text-gray-300 hover:text-white cursor-pointer px-5 py-1.5 relative overflow-hidden group"
+                    initial={{}}
+                    animate={{
+                      textShadow: ['0 0 0px rgba(255,255,255,0)', '0 0 2px rgba(255,255,255,0.2)', '0 0 0px rgba(255,255,255,0)'],
+                      transition: {
+                        textShadow: {
+                          repeat: Infinity,
+                          duration: 2,
+                          ease: "easeInOut"
+                        }
+                      }
+                    }}
+                    whileHover={{ 
+                      color: '#ffffff', 
+                      scale: 1.05, 
+                      textShadow: '0 0 8px rgba(59, 130, 246, 0.5)' 
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 600, damping: 10 }}
                   >
                     <motion.span 
                       className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-pink-400 group-hover:w-full" 
@@ -339,22 +354,40 @@ const Landing = () => {
                 </Link>
                 <Link to="/login">
                   <motion.span 
-                    className="text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5 relative"
+                    className="text-sm bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/5 relative overflow-hidden"
+                    initial={{}}
+                    animate={{
+                      boxShadow: ['0 0 0px rgba(59, 130, 246, 0)', '0 0 8px rgba(59, 130, 246, 0.2)', '0 0 0px rgba(59, 130, 246, 0)'],
+                      transition: {
+                        boxShadow: {
+                          repeat: Infinity,
+                          duration: 2.5,
+                          ease: "easeInOut"
+                        }
+                      }
+                    }}
                     whileHover={{ 
                       scale: 1.05, 
                       backgroundColor: "rgba(255,255,255,0.15)", 
-                      borderColor: "rgba(255,255,255,0.3)",
-                      boxShadow: "0 0 15px rgba(79, 209, 197, 0.3)"
+                      borderColor: "rgba(255,255,255,0.4)",
+                      boxShadow: "0 0 15px rgba(59, 130, 246, 0.4)"
                     }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 600, damping: 15 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 600, damping: 10 }}
                   >
-                    <motion.span 
-                      initial={{ opacity: 0.8 }}
-                      whileHover={{ opacity: 1 }}
-                    >
-                      Login
-                    </motion.span>
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                      animate={{
+                        x: ["-100%", "100%"],
+                        transition: {
+                          duration: 2,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                          repeatDelay: 1
+                        }
+                      }}
+                    />
+                    <span className="relative z-10">Login</span>
                   </motion.span>
                 </Link>
               </div>
@@ -555,11 +588,50 @@ const Landing = () => {
             <div className="mt-10">
               <Link to="/register">
                 <motion.button 
-                  className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium text-lg"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium text-lg shadow-lg shadow-blue-500/20 relative overflow-hidden"
+                  initial={{scale: 1}}
+                  animate={{
+                    boxShadow: ["0 10px 15px -3px rgba(59, 130, 246, 0.3)", "0 15px 20px -3px rgba(59, 130, 246, 0.4)", "0 10px 15px -3px rgba(59, 130, 246, 0.3)"],
+                    transition: {
+                      boxShadow: {
+                        repeat: Infinity,
+                        duration: 1.5,
+                        ease: "easeInOut",
+                        repeatType: "reverse"
+                      }
+                    }
+                  }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 20px 30px -5px rgba(59, 130, 246, 0.55)",
+                    transition: { 
+                      duration: 0.2, 
+                      ease: "easeOut" 
+                    } 
+                  }}
+                  whileTap={{ 
+                    scale: 0.97,
+                    boxShadow: "0 5px 15px -5px rgba(59, 130, 246, 0.4)"
+                  }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 500, 
+                    damping: 12 
+                  }}
                 >
-                  Get Started Now
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/20 to-blue-500/0"
+                    animate={{
+                      x: ["-100%", "100%"],
+                      transition: {
+                        duration: 1.5,
+                        ease: "easeInOut",
+                        repeat: Infinity,
+                        repeatDelay: 0.5
+                      }
+                    }}
+                  />
+                  <span className="relative z-10">Get Started Now</span>
                 </motion.button>
               </Link>
             </div>

@@ -196,10 +196,49 @@ const Register = () => {
           <motion.button 
             type="submit" 
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-blue-500/25 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4 relative overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white rounded-xl font-medium shadow-lg shadow-blue-500/20 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4 relative overflow-hidden"
+            initial={{scale: 1}}
+            animate={{
+              boxShadow: ["0 10px 15px -3px rgba(59, 130, 246, 0.3)", "0 15px 20px -3px rgba(59, 130, 246, 0.4)", "0 10px 15px -3px rgba(59, 130, 246, 0.3)"],
+              transition: {
+                boxShadow: {
+                  repeat: Infinity,
+                  duration: 1.5,
+                  ease: "easeInOut",
+                  repeatType: "reverse"
+                }
+              }
+            }}
+            whileHover={{ 
+              scale: 1.03, 
+              boxShadow: "0 15px 25px -5px rgba(59, 130, 246, 0.55)",
+              transition: { 
+                duration: 0.2, 
+                ease: "easeOut" 
+              } 
+            }}
+            whileTap={{ 
+              scale: 0.97,
+              boxShadow: "0 5px 15px -5px rgba(59, 130, 246, 0.4)"
+            }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 500, 
+              damping: 12 
+            }}
           >
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/20 to-blue-500/0"
+              animate={{
+                x: ["-100%", "100%"],
+                transition: {
+                  duration: 1.5,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatDelay: 0.5
+                }
+              }}
+            />
             {loading ? (
               <>
                 <span className="opacity-0">Create Account</span>
