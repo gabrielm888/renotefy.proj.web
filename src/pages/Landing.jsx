@@ -35,17 +35,8 @@ const Landing = () => {
   // Features section data
   const features = [
     {
-      title: 'AI-Powered Notes',
-      description: 'Leverage artificial intelligence to enhance your note-taking experience',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      )
-    },
-    {
-      title: 'Study Mode',
-      description: 'Transform your notes into effective study materials with our dedicated study mode',
+      title: 'Fast Learning, All Digital',
+      description: 'Transform how you learn with our intuitive digital workspace that makes capturing and retaining information effortless',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -53,20 +44,29 @@ const Landing = () => {
       )
     },
     {
-      title: 'Dark Mode',
-      description: 'Reduce eye strain with our beautiful dark mode designed for day and night use',
+      title: 'Your Notes, Secured Privately',
+      description: 'Rest easy knowing your intellectual property is protected with top-tier encryption and security measures',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
       )
     },
     {
-      title: 'Cross-Platform',
-      description: 'Access your notes from anywhere with our web, desktop, and mobile applications',
+      title: 'Every AI Feature, All in One',
+      description: 'Unlock your productivity with seamlessly integrated AI tools that summarize, organize, and enhance your notes automatically',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      )
+    },
+    {
+      title: 'Collaboration at Your Fingertips',
+      description: 'Share and co-edit notes in real-time with colleagues and classmates, making teamwork smooth and efficient',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       )
     }
@@ -79,7 +79,7 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-300 italic" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <Link to="/" className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-400 italic tracking-wide" style={{ fontFamily: "'Playfair Display', serif", letterSpacing: '0.5px' }}>
                 renotefy
               </Link>
             </div>
@@ -202,7 +202,7 @@ const Landing = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold">Ready to upgrade your note-taking?</h2>
             <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-              Join thousands of users who are already enhancing their productivity with Renotefy
+              Join <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-400 font-medium">thousands</span> of users who are already enhancing their productivity with Renotefy
             </p>
             <div className="mt-10">
               <Link to="/register">
