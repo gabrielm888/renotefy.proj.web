@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import AppPreviewCards from './AppPreviewCards';
+import HeroButtons from '../components/HeroButtons';
 
 const Landing = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -421,104 +422,7 @@ const Landing = () => {
           <p className="text-base md:text-xl mt-6 text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Your personal space for notes, ideas, and everything in between.
           </p>
-          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/register">
-              <motion.button 
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white font-medium text-base w-full sm:w-auto shadow-lg shadow-blue-500/20 relative overflow-hidden"
-                initial={{scale: 1}}
-                animate={{
-                  boxShadow: ["0 10px 15px -3px rgba(59, 130, 246, 0.3)", "0 15px 20px -3px rgba(59, 130, 246, 0.4)", "0 10px 15px -3px rgba(59, 130, 246, 0.3)"],
-                  transition: {
-                    boxShadow: {
-                      repeat: Infinity,
-                      duration: 1.5,
-                      ease: "easeInOut",
-                      repeatType: "reverse"
-                    }
-                  }
-                }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  boxShadow: "0 20px 30px -5px rgba(59, 130, 246, 0.55)",
-                  transition: { 
-                    duration: 0.2, 
-                    ease: "easeOut" 
-                  } 
-                }}
-                whileTap={{ 
-                  scale: 0.97,
-                  boxShadow: "0 5px 15px -5px rgba(59, 130, 246, 0.4)"
-                }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 12
-                }}
-              >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/20 to-blue-500/0"
-                  animate={{
-                    x: ["-100%", "100%"],
-                    transition: {
-                      duration: 1.5,
-                      ease: "easeInOut",
-                      repeat: Infinity,
-                      repeatDelay: 0.5
-                    }
-                  }}
-                />
-                <span className="relative z-10">Get Started</span>
-              </motion.button>
-            </Link>
-            <Link to="/login">
-              <motion.button 
-                className="px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-sm text-white font-medium text-base border border-white/20 w-full sm:w-auto mt-3 sm:mt-0 relative overflow-hidden"
-                initial={{scale: 1}}
-                animate={{
-                  borderColor: ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.3)", "rgba(255,255,255,0.2)"],
-                  transition: {
-                    borderColor: {
-                      repeat: Infinity,
-                      duration: 2,
-                      ease: "easeInOut"
-                    }
-                  }
-                }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  backgroundColor: "rgba(255,255,255,0.15)", 
-                  borderColor: "rgba(255,255,255,0.4)",
-                  boxShadow: "0 0 20px rgba(255, 255, 255, 0.15)",
-                  transition: { 
-                    duration: 0.2, 
-                    ease: "easeOut" 
-                  } 
-                }}
-                whileTap={{ 
-                  scale: 0.97
-                }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 500, 
-                  damping: 12 
-                }}
-              >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                  animate={{
-                    x: ["-100%", "100%"],
-                    transition: {
-                      duration: 2,
-                      ease: "easeInOut",
-                      repeat: Infinity,
-                      repeatDelay: 1
-                    }
-                  }}
-                />
-                <span className="relative z-10">Login</span>
-              </motion.button>
-            </Link>
-          </div>
+          <HeroButtons />
         </motion.div>
 
         {/* App Preview Cards */}
