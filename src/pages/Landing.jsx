@@ -38,36 +38,270 @@ const Landing = () => {
       title: 'Fast Learning, All Digital',
       description: 'Transform how you learn with our intuitive digital workspace that makes capturing and retaining information effortless',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
+        <motion.div
+          initial="hidden"
+          whileHover="visible"
+          animate="hidden"
+        >
+          <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <motion.path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5} 
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              variants={{
+                hidden: { pathLength: 0.8 },
+                visible: {
+                  pathLength: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }
+                }
+              }}
+            />
+            <motion.path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5}
+              d="M12 6.253v13" 
+              variants={{
+                hidden: { pathLength: 0.5, opacity: 0.7 },
+                visible: {
+                  pathLength: 1,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.6,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }
+                }
+              }}
+            />
+          </motion.svg>
+        </motion.div>
       )
     },
     {
       title: 'Your Notes, Secured Privately',
       description: 'Rest easy knowing your intellectual property is protected with top-tier encryption and security measures',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
+        <motion.div
+          initial="hidden"
+          whileHover="visible"
+          animate="hidden"
+        >
+          <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <motion.path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+              variants={{
+                hidden: { opacity: 1 },
+                visible: {
+                  opacity: 1,
+                  transition: { duration: 0.2 }
+                }
+              }}
+            />
+            <motion.path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M16 11V7a4 4 0 00-8 0v4"
+              variants={{
+                hidden: { pathLength: 1, y: 0 },
+                visible: {
+                  pathLength: 1,
+                  y: -2,
+                  transition: {
+                    y: {
+                      duration: 0.3,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut"
+                    }
+                  }
+                }
+              }}
+            />
+            <motion.path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 12a1 1 0 100-2 1 1 0 000 2z"
+              variants={{
+                hidden: { scale: 1 },
+                visible: {
+                  scale: 1.2,
+                  fill: "#3b82f6",
+                  transition: {
+                    duration: 0.3,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }
+                }
+              }}
+            />
+          </motion.svg>
+        </motion.div>
       )
     },
     {
       title: 'Every AI Feature, All in One',
       description: 'Unlock your productivity with seamlessly integrated AI tools that summarize, organize, and enhance your notes automatically',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
+        <motion.div
+          initial="hidden"
+          whileHover="visible"
+          animate="hidden"
+        >
+          <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <motion.path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5} 
+              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              variants={{
+                hidden: { pathLength: 1 },
+                visible: {
+                  pathLength: 1,
+                  transition: { duration: 0.2 }
+                }
+              }}
+            />
+            <motion.circle
+              cx="12"
+              cy="8.5"
+              r="2.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              fill="none"
+              variants={{
+                hidden: { scale: 1 },
+                visible: {
+                  scale: [1, 1.2, 1],
+                  opacity: [0.7, 1, 0.7],
+                  transition: {
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }
+              }}
+            />
+            <motion.path 
+              d="M8 11h8"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              variants={{
+                hidden: { pathLength: 0, opacity: 0.2 },
+                visible: {
+                  pathLength: 1,
+                  opacity: 1,
+                  transition: {
+                    pathLength: {
+                      duration: 0.5,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut"
+                    }
+                  }
+                }
+              }}
+            />
+          </motion.svg>
+        </motion.div>
       )
     },
     {
       title: 'Collaboration at Your Fingertips',
       description: 'Share and co-edit notes in real-time with colleagues and classmates, making teamwork smooth and efficient',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
+        <motion.div
+          initial="hidden"
+          whileHover="visible"
+          animate="hidden"
+        >
+          <motion.svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <motion.path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5} 
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" 
+              variants={{
+                hidden: { pathLength: 1 },
+                visible: {
+                  pathLength: 1,
+                }
+              }}
+            />
+            <motion.circle 
+              cx="12" 
+              cy="7" 
+              r="3" 
+              stroke="currentColor" 
+              strokeWidth="1.5" 
+              fill="none"
+              variants={{
+                hidden: { scale: 1 },
+                visible: {
+                  scale: [1, 1.1, 1],
+                  transition: {
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }
+              }}
+            />
+            <motion.circle 
+              cx="19" 
+              cy="10" 
+              r="2" 
+              stroke="currentColor" 
+              strokeWidth="1.5" 
+              fill="none"
+              variants={{
+                hidden: { x: 0 },
+                visible: {
+                  x: [-1, 1, -1],
+                  transition: {
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.2
+                  }
+                }
+              }}
+            />
+            <motion.circle 
+              cx="5" 
+              cy="10" 
+              r="2" 
+              stroke="currentColor" 
+              strokeWidth="1.5" 
+              fill="none"
+              variants={{
+                hidden: { x: 0 },
+                visible: {
+                  x: [1, -1, 1],
+                  transition: {
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.2
+                  }
+                }
+              }}
+            />
+          </motion.svg>
+        </motion.div>
       )
     }
   ];
@@ -85,11 +319,25 @@ const Landing = () => {
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-center space-x-4">
-                <Link to="/register" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Sign Up
+                <Link to="/register">
+                  <motion.span 
+                    className="text-sm text-gray-300 hover:text-white cursor-pointer px-3 py-1.5"
+                    whileHover={{ color: '#ffffff', scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    Sign Up
+                  </motion.span>
                 </Link>
-                <Link to="/login" className="text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-colors">
-                  Login
+                <Link to="/login">
+                  <motion.span 
+                    className="text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5"
+                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.2)" }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    Login
+                  </motion.span>
                 </Link>
               </div>
             </div>
@@ -126,9 +374,23 @@ const Landing = () => {
             <Link to="/register">
               <motion.button 
                 className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white font-medium text-base w-full sm:w-auto shadow-lg shadow-blue-500/20"
-                whileHover={{ scale: 1.02, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                whileHover={{ 
+                  scale: 1.04, 
+                  boxShadow: "0 15px 25px -5px rgba(59, 130, 246, 0.45)",
+                  transition: { 
+                    duration: 0.3, 
+                    ease: "easeOut" 
+                  } 
+                }}
+                whileTap={{ 
+                  scale: 0.97,
+                  boxShadow: "0 5px 15px -5px rgba(59, 130, 246, 0.4)"
+                }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 400, 
+                  damping: 15 
+                }}
               >
                 Get Started
               </motion.button>
@@ -136,9 +398,24 @@ const Landing = () => {
             <Link to="/login">
               <motion.button 
                 className="px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-sm text-white font-medium text-base border border-white/20 w-full sm:w-auto mt-3 sm:mt-0"
-                whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.15)" }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                whileHover={{ 
+                  scale: 1.04, 
+                  backgroundColor: "rgba(255,255,255,0.15)", 
+                  borderColor: "rgba(255,255,255,0.3)",
+                  transition: { 
+                    duration: 0.3, 
+                    ease: "easeOut" 
+                  } 
+                }}
+                whileTap={{ 
+                  scale: 0.97,
+                  backgroundColor: "rgba(255,255,255,0.12)"
+                }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 400, 
+                  damping: 15 
+                }}
               >
                 Login
               </motion.button>
@@ -174,11 +451,17 @@ const Landing = () => {
             {features.map((feature, index) => (
               <motion.div 
                 key={feature.title}
-                className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700"
+                className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 transition-all"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
                 transition={{ duration: 0.6, delay: 0.5 + (index * 0.1) }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                whileHover={{ 
+                  y: -5, 
+                  boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.25)",
+                  borderColor: "rgba(255,255,255,0.2)", 
+                  backgroundColor: "rgba(17, 24, 39, 0.65)",
+                  transition: { duration: 0.2 } 
+                }}
               >
                 <div className="text-blue-400 mb-4">
                   {feature.icon}
