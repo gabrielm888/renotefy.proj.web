@@ -4,8 +4,8 @@
 [build]
   # Directory to publish (the output of npm run build)
   publish = "dist"
-  # Build command
-  command = "npm run build"
+  # Build command - modified to ensure dependencies are installed with --production=false
+  command = "npm ci --production=false && npm run build"
 
 # Redirects for SPA
 [[redirects]]
