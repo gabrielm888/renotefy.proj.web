@@ -209,12 +209,21 @@ export const themeConfig = {
     // Custom shadows
     soft: '0 2px 12px -1px rgba(0, 0, 0, 0.05)',
     'soft-lg': '0 4px 20px -2px rgba(0, 0, 0, 0.08)',
-    glow: '0 0 15px -3px rgba(14, 165, 233, 0.4)',
-    'glow-lg': '0 0 30px -5px rgba(14, 165, 233, 0.6)',
-    'glow-secondary': '0 0 15px -3px rgba(34, 197, 94, 0.4)',
-    'inner-glow': 'inset 0 0 10px rgba(255, 255, 255, 0.1)',
-    card: '0 8px 30px rgba(0, 0, 0, 0.05)',
-    'card-hover': '0 12px 40px rgba(0, 0, 0, 0.1)',
+    // Glow effects with better visibility
+    glow: '0 0 15px -3px rgba(59, 130, 246, 0.5)',
+    'glow-lg': '0 0 30px -5px rgba(59, 130, 246, 0.7)',
+    'glow-primary': '0 0 20px -2px rgba(59, 130, 246, 0.6)',
+    'glow-secondary': '0 0 15px -3px rgba(147, 51, 234, 0.5)',
+    'glow-purple': '0 0 20px -2px rgba(168, 85, 247, 0.6)',
+    'glow-pink': '0 0 20px -2px rgba(236, 72, 153, 0.6)',
+    'inner-glow': 'inset 0 0 10px rgba(255, 255, 255, 0.15)',
+    'inner-glow-strong': 'inset 0 0 15px rgba(255, 255, 255, 0.25)',
+    card: '0 8px 30px rgba(0, 0, 0, 0.15)',
+    'card-hover': '0 12px 40px rgba(0, 0, 0, 0.2)',
+    // Glass effects
+    glass: '0 4px 30px rgba(0, 0, 0, 0.1)',
+    'glass-hover': '0 8px 32px rgba(0, 0, 0, 0.15)',
+    'glass-card': '0 8px 32px rgba(0, 0, 0, 0.2)',
   },
 
   // Z-index
@@ -290,6 +299,43 @@ export const themeConfig = {
       xl: '5rem',
       '2xl': '6rem',
     },
+  },
+
+  // Glass effects
+  glass: {
+    background: {
+      light: 'rgba(255, 255, 255, 0.7)',
+      dark: 'rgba(17, 25, 40, 0.75)',
+      blue: 'rgba(59, 130, 246, 0.1)',
+      purple: 'rgba(168, 85, 247, 0.1)',
+      ultraDark: 'rgba(10, 10, 15, 0.85)',
+    },
+    backdropFilter: 'blur(16px) saturate(180%)',
+    border: {
+      light: 'rgba(255, 255, 255, 0.125)',
+      dark: 'rgba(255, 255, 255, 0.08)',
+    },
+  },
+  
+  // Specific gradients
+  gradients: {
+    primary: 'linear-gradient(90deg, #3B82F6 0%, #2563EB 100%)',
+    secondary: 'linear-gradient(90deg, #8B5CF6 0%, #6366F1 100%)',
+    success: 'linear-gradient(90deg, #10B981 0%, #059669 100%)',
+    danger: 'linear-gradient(90deg, #EF4444 0%, #DC2626 100%)',
+    warning: 'linear-gradient(90deg, #F59E0B 0%, #D97706 100%)',
+    info: 'linear-gradient(90deg, #0EA5E9 0%, #0284C7 100%)',
+    dark: 'linear-gradient(90deg, #1F2937 0%, #111827 100%)',
+    light: 'linear-gradient(90deg, #F9FAFB 0%, #F3F4F6 100%)',
+    // Special gradients
+    'blue-purple': 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)',
+    'purple-pink': 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)',
+    'blue-cyan': 'linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%)',
+    'cyan-green': 'linear-gradient(135deg, #06B6D4 0%, #10B981 100%)',
+    // Background gradients
+    'bg-dark-blue': 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+    'bg-dark-purple': 'linear-gradient(135deg, #18181B 0%, #27272A 50%, #3B0764 100%)',
+    'bg-aurora': 'linear-gradient(135deg, rgb(13, 17, 23) 0%, rgb(21, 31, 42) 33%, rgb(24, 21, 44) 66%, rgb(30, 20, 39) 100%)',
   },
 };
 
