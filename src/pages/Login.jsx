@@ -79,22 +79,62 @@ const Login = () => {
 
   return (
     <motion.div 
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950 overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={fadeIn}
     >
       {/* Background accents with glow effects */}
-      <div className="absolute top-20 left-1/4 w-72 h-72 bg-blue-500/30 rounded-full filter blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-pink-600/30 rounded-full filter blur-3xl animate-pulse-slow"></div>
-      <div className="absolute top-1/3 right-1/3 w-40 h-40 bg-indigo-500/20 rounded-full filter blur-3xl animate-float"></div>
+      {/* Enhanced background accents with stronger glow effects */}
+      <motion.div 
+        className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/40 rounded-full filter blur-3xl"
+        animate={{ 
+          scale: [1, 1.1, 1],
+          opacity: [0.4, 0.6, 0.4]
+        }}
+        transition={{ 
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      ></motion.div>
+      <motion.div 
+        className="absolute -bottom-10 right-1/4 w-96 h-96 bg-purple-600/40 rounded-full filter blur-3xl"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3]
+        }}
+        transition={{ 
+          duration: 10,
+          repeat: Infinity,
+          repeatType: "reverse",
+          delay: 2
+        }}
+      ></motion.div>
+      <motion.div 
+        className="absolute top-1/3 right-1/3 w-64 h-64 bg-indigo-500/30 rounded-full filter blur-3xl"
+        animate={{ 
+          y: [-10, 10, -10],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{ 
+          duration: 12,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      ></motion.div>
       
       <motion.div 
         className="w-full max-w-md p-8 rounded-xl shadow-glass bg-gray-900/30 backdrop-blur-xl border border-white/10 relative z-10 overflow-hidden"
         variants={slideUp}
+        whileHover={{ boxShadow: "0 0 40px 5px rgba(120, 120, 255, 0.15)" }}
+        transition={{ duration: 0.3 }}
       >
         {/* Glass shine effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-white/10 to-transparent pointer-events-none"></div>
+        {/* Enhanced glass shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-white/5 to-transparent pointer-events-none"></div>
+        <div className="absolute -inset-1/2 top-0 bg-gradient-to-b from-blue-500/10 via-transparent to-transparent rotate-12 transform pointer-events-none"></div>
+        <div className="absolute -inset-1/2 bottom-0 bg-gradient-to-t from-purple-500/10 via-transparent to-transparent -rotate-12 transform pointer-events-none"></div>
         
         <motion.div className="text-center mb-6" variants={staggerContainer} initial="hidden" animate="visible">
           <motion.h1 
@@ -156,7 +196,7 @@ const Login = () => {
             disabled={loading}
             className={classNames(
               "w-full relative overflow-hidden text-white font-medium py-3.5 px-4 rounded-xl flex justify-center items-center mb-4",
-              "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600",
+              "bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700",
               "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-70",
               "shadow-glow-primary transition-all duration-300"
             )}
