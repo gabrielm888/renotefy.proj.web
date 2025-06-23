@@ -48,6 +48,7 @@ A modern, AI-powered note-taking web application with a sleek, minimalist design
 - Node.js 18.x or higher
 - npm or yarn
 - Firebase account
+- Vercel account (for deployment)
 
 ### Environment Setup
 
@@ -75,16 +76,32 @@ A modern, AI-powered note-taking web application with a sleek, minimalist design
 4. Under "Your apps", add a new web app if you haven't already
 5. Copy the configuration object and update your environment variables
 
-### Netlify Deployment
+### Vercel Deployment
 
-1. Push your code to a GitHub repository
-2. Connect the repository to Netlify
-3. Set up the following environment variables in Netlify:
-   - Go to Site settings > Build & deploy > Environment
-   - Add all the Firebase environment variables from your `.env.local` file
-4. Set the build command to: `npm ci --production=false && npm run build`
-5. Set the publish directory to: `dist`
-6. Deploy your site
+1. Push your code to a GitHub, GitLab, or Bitbucket repository
+2. Go to [Vercel Dashboard](https://vercel.com/dashboard) and click "Add New" > "Project"
+3. Import your repository
+4. Configure project settings:
+   - Framework Preset: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Install Command: `npm install`
+5. Add environment variables (from your `.env.local` file):
+   - `VITE_FIREBASE_API_KEY`
+   - `VITE_FIREBASE_AUTH_DOMAIN`
+   - `VITE_FIREBASE_PROJECT_ID`
+   - `VITE_FIREBASE_STORAGE_BUCKET`
+   - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+   - `VITE_FIREBASE_APP_ID`
+   - `VITE_FIREBASE_MEASUREMENT_ID` (optional)
+6. Click "Deploy"
+
+#### Firebase Configuration for Vercel
+After deployment:
+1. Go to the [Firebase Console](https://console.firebase.google.com/)
+2. Select your project
+3. Go to Authentication > Settings > Authorized domains
+4. Add your Vercel domain (e.g., `your-app.vercel.app`)
 
 ### Local Development
 
@@ -148,7 +165,7 @@ npm run build
 
 ## Deployment
 
-This project is configured for easy deployment to Netlify. The repository can be connected directly to Netlify for continuous deployment.
+This project is configured for easy deployment to Vercel. The repository can be connected directly to Vercel for continuous deployment. The application is built as a static site with client-side routing and Firebase integration.
 
 ## Project Structure
 

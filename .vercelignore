@@ -1,0 +1,90 @@
+# Dependency directories
+node_modules/
+
+# Build output
+.next/
+out/
+dist/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Vite cache
+.vite/
+
+# Test coverage
+coverage/
+
+# Local Netlify folder
+.netlify/
+
+# Local Vercel folder
+.vercel/
+
+# Local development files
+*.local
+
+# Logs
+logs
+*.log
+
+# Misc
+*.pem
+*.p12
+*.key
+*.crt
+*.csr
+*.srl
+*.sln
+*.user
+*.userosscache
+*.sln.docstates
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build files
+build/
+dist/
+
+# Cache
+.cache/
+.temp/
+.tmp/
+
+# Local env files
+.env*.local
+
+# Vercel specific
+.vercel

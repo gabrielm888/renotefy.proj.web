@@ -5,6 +5,13 @@ import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
 
+// Get environment variables (works with both Vite and Vercel)
+const env = typeof window !== 'undefined' ? 
+  // Client-side
+  (window.__ENV__ || process.env) : 
+  // Server-side
+  process.env;
+
 // Required Firebase environment variables
 const requiredVars = [
   'VITE_FIREBASE_API_KEY',
@@ -12,36 +19,38 @@ const requiredVars = [
   'VITE_FIREBASE_PROJECT_ID',
   'VITE_FIREBASE_STORAGE_BUCKET',
   'VITE_FIREBASE_MESSAGING_SENDER_ID',
-  'VITE_FIREBASE_APP_ID',
-  'VITE_FIREBASE_MEASUREMENT_ID'
+  'VITE_FIREBASE_APP_ID'
 ];
 
-// Check for missing environment variables
-const missingVars = requiredVars.filter(varName => !import.meta.env[varName]);
+// Firebase configuration with fallback for Vercel env vars
+const firebaseConfig = {
+  apiKey: env.VITE_FIREBASE_API_KEY || env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: env.VITE_FIREBASE_PROJECT_ID || env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: env.VITE_FIREBASE_APP_ID || env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+};
 
-if (missingVars.length > 0) {
-  const errorMsg = `Missing required Firebase configuration: ${missingVars.join(', ')}`;
-  console.error('Firebase Config Error:', errorMsg);
-  
-  // Only throw in production, allow development to continue with warnings
-  if (import.meta.env.PROD) {
-    throw new Error(errorMsg);
-  } else {
-    console.warn('Firebase configuration is incomplete. Some features may not work.');
+// Check for missing required configuration in production
+if (process.env.NODE_ENV === 'production') {
+  const missingVars = Object.entries({
+    apiKey: 'VITE_FIREBASE_API_KEY',
+    authDomain: 'VITE_FIREBASE_AUTH_DOMAIN',
+    projectId: 'VITE_FIREBASE_PROJECT_ID',
+    appId: 'VITE_FIREBASE_APP_ID'
+  }).filter(([key]) => !firebaseConfig[key]);
+
+  if (missingVars.length > 0) {
+    const errorMsg = `Missing required Firebase configuration: ${missingVars.map(([_, varName]) => varName).join(', ')}`;
+    console.error('Firebase Config Error:', errorMsg);
+    if (typeof window === 'undefined') {
+      // Server-side error
+      throw new Error(errorMsg);
+    }
   }
 }
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
-};
 
 // Log safe config info (without sensitive data)
 console.log('[Firebase Config]', {
