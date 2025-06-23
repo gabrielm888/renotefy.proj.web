@@ -66,17 +66,31 @@ const Register = () => {
   
   const handleGoogleLogin = async () => {
     setError('');
-    setLoading(true);
     
     try {
       console.log('Initiating Google registration/login');
-      await loginWithGoogle();
-      console.log('Google registration/login successful');
-      navigate('/dashboard');
+      setLoading(true);
+      
+      const user = await loginWithGoogle();
+      console.log('Google login response:', user ? 'Success' : 'Redirect in progress');
+      
+      // If we get a user back, it means the popup worked
+      // and we can navigate. Otherwise, a redirect is happening
+      if (user) {
+        console.log('Google login successful via popup, redirecting to dashboard');
+        navigate('/dashboard');
+      }
+      // If using redirect method, the page will refresh and handle auth state
     } catch (err) {
       console.error('Google registration/login error:', err);
-      setError('Failed to register with Google: ' + (err.message || 'Google authentication was cancelled or failed'));
-    } finally {
+      
+      if (err.code === 'auth/unauthorized-domain') {
+        setError(`This domain (${window.location.hostname}) is not authorized for Google sign-in. Please add it to Firebase authorized domains.`);
+      } else if (err.code === 'auth/popup-closed-by-user') {
+        setError('Google sign-in was cancelled. Please try again.');
+      } else {
+        setError('Failed to register with Google: ' + (err.message || 'Unknown error'));
+      }
       setLoading(false);
     }
   };
@@ -267,7 +281,7 @@ const Register = () => {
           disabled={loading}
           className="w-full flex items-center justify-center py-3 px-4 border border-white/30 rounded-xl shadow-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all font-medium text-white"
           title="Sign up with your Google account"
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.15)" }}
           whileTap={{ scale: 0.98 }}
         >
           <img 
@@ -277,6 +291,19 @@ const Register = () => {
           />
           Sign up with Google
         </motion.button>
+        
+        {error && error.includes('unauthorized-domain') && (
+          <div className="mt-4 p-4 bg-amber-500/20 border border-amber-500/30 text-amber-200 rounded-xl text-sm backdrop-blur-sm">
+            <p className="font-bold">Domain Authorization Required:</p>
+            <p>To enable Google login, you need to add your domain to Firebase authorized domains:</p>
+            <ol className="list-decimal list-inside mt-2 ml-2">
+              <li>Go to the Firebase Console</li>
+              <li>Select your project (re-notefy-539da)</li>
+              <li>Navigate to Authentication → Settings → Authorized domains</li>
+              <li>Add <code className="bg-amber-500/30 px-1 rounded">{window.location.hostname}</code> to the list</li>
+            </ol>
+          </div>
+        )}
         
         <p className="mt-8 text-center text-sm text-gray-300">
           Already have an account?{' '}

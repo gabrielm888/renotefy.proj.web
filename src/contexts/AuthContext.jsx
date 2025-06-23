@@ -108,32 +108,61 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login with Google using redirect method
+  // Login with Google - try popup first, fallback to redirect
   const loginWithGoogle = async () => {
     try {
       setError('');
+      setLoading(true);
       
       // Set custom parameters for Google sign-in
-      googleProvider.setCustomParameters({ prompt: 'select_account' });
+      googleProvider.setCustomParameters({ 
+        prompt: 'select_account',
+        // Force Google accounts selection
+        login_hint: ''
+      });
       
       // Add scopes for additional permissions if needed
       googleProvider.addScope('email');
       googleProvider.addScope('profile');
       
-      // Sign in with redirect instead of popup
-      await signInWithRedirect(auth, googleProvider);
-      
-      // The result will be handled in the useEffect hook for redirect results
-      return null;
+      // First try with popup (better UX if it works)
+      try {
+        console.log('Attempting Google sign-in with popup...');
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log('Google popup sign-in successful');
+        // If we get here, popup worked fine
+        await handleGoogleUser(result.user);
+        return result.user;
+      } catch (popupError) {
+        console.log('Popup auth failed, falling back to redirect:', popupError.code);
+        
+        // If popup was blocked or failed for any reason, fall back to redirect method
+        // but don't fall back for actual auth errors which would also happen with redirect
+        if (
+          popupError.code === 'auth/popup-blocked' ||
+          popupError.code === 'auth/popup-closed-by-user' ||
+          popupError.code === 'auth/cancelled-popup-request'
+        ) {
+          console.log('Using redirect method as fallback...');
+          await signInWithRedirect(auth, googleProvider);
+          return null; // The redirect will reload the page, so we won't reach the code after this
+        } else {
+          // This is a real authentication error, not just a popup issue
+          throw popupError;
+        }
+      }
     } catch (err) {
       console.error('Google login error:', err);
+      setLoading(false);
       
       // Handle specific Google sign-in errors with user-friendly messages
       if (err.code === 'auth/account-exists-with-different-credential') {
         setError('An account already exists with the same email address but different sign-in credentials. Please sign in using a different method.');
       } else if (err.code === 'auth/unauthorized-domain') {
-        setError('This domain is not authorized for Google sign-in. Please check Firebase console authorized domains.');
-        console.error('IMPORTANT: You need to add your domain to your Firebase console authorized domains!');
+        setError(`This domain (${window.location.hostname}) is not authorized for Google sign-in. Please add it to Firebase authorized domains.`);
+        console.error(`IMPORTANT: You need to add ${window.location.hostname} to your Firebase console authorized domains!`);
+      } else if (err.code === 'auth/internal-error') {
+        setError('Authentication service encountered an internal error. Please try again later.');
       } else {
         setError(err.message || 'Failed to login with Google');
       }
@@ -146,63 +175,76 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  // Handle Google redirect results
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        setLoading(true);
-        const result = await getRedirectResult(auth);
+  // Handle Google user creation or verification
+  const handleGoogleUser = async (user) => {
+    try {
+      if (!user) return;
+      console.log('Processing Google user:', user.uid);
+      
+      const docRef = doc(firestore, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
+      
+      if (!docSnap.exists()) {
+        // Create user data if it doesn't exist
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          fullName: user.displayName || '',
+          username: `${user.email.split('@')[0]}_${Date.now().toString().slice(-4)}`,
+          createdAt: new Date().toISOString(),
+          photoURL: user.photoURL || '',
+          lastLoginAt: new Date().toISOString(),
+        };
         
-        if (result) {
-          const user = result.user;
-          console.log('Google sign-in redirect completed successfully:', user.uid);
-          
-          // Create or verify Firestore user document
-          try {
-            const docRef = doc(firestore, 'users', user.uid);
-            const docSnap = await getDoc(docRef);
-            
-            if (!docSnap.exists()) {
-              // Create user data if it doesn't exist
-              const userData = {
-                uid: user.uid,
-                email: user.email,
-                fullName: user.displayName || '',
-                username: `${user.email.split('@')[0]}_${Date.now().toString().slice(-4)}`,
-                createdAt: new Date().toISOString(),
-                photoURL: user.photoURL || '',
-              };
-              
-              await setDoc(docRef, userData);
-              console.log('User data created in Firestore for Google user after redirect');
-            } else {
-              console.log('User document already exists in Firestore');
-            }
-          } catch (firestoreErr) {
-            console.error('Error handling Firestore data after redirect:', firestoreErr);
-            // Continue even if Firestore operations fail
-          }
-        }
-      } catch (err) {
-        console.error('Error processing redirect result:', err);
-        
-        // Handle errors from redirect sign-in
-        if (err.code === 'auth/account-exists-with-different-credential') {
-          setError('An account already exists with the same email address but different sign-in credentials.');
-        } else if (err.code === 'auth/unauthorized-domain') {
-          setError('This domain is not authorized for Google sign-in. Please add your domain to Firebase authorized domains list.');
-          console.error(`IMPORTANT: You need to add ${window.location.hostname} to your Firebase authorized domains!`);
-        } else {
-          setError(err.message || 'Failed to complete Google sign-in');
-        }
-      } finally {
-        setLoading(false);
+        await setDoc(docRef, userData);
+        console.log('User data created in Firestore for Google user');
+      } else {
+        // Update last login time
+        console.log('Updating existing user document in Firestore');
+        await setDoc(docRef, { lastLoginAt: new Date().toISOString() }, { merge: true });
       }
-    };
-    
+    } catch (firestoreErr) {
+      console.error('Error handling Firestore data for Google user:', firestoreErr);
+      // Continue even if Firestore operations fail - we don't want to block auth
+    }
+  };
+
+  // Handle redirect result from Google sign-in
+  const handleRedirectResult = async () => {
+    try {
+      console.log('Checking for redirect result...');
+      const result = await getRedirectResult(auth);
+      
+      if (result) {
+        const user = result.user;
+        console.log('Google sign-in redirect completed successfully:', user.uid);
+        await handleGoogleUser(user);
+      } else {
+        console.log('No redirect result found');
+      }
+    } catch (err) {
+      console.error('Error processing redirect result:', err);
+      
+      // Handle errors from redirect sign-in
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        setError('An account already exists with the same email address but different sign-in credentials.');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setError(`This domain (${window.location.hostname}) is not authorized for Google sign-in. Please add it to Firebase authorized domains.`);
+        console.error(`IMPORTANT: You need to add ${window.location.hostname} to your Firebase authorized domains!`);
+      } else {
+        setError(err.message || 'Failed to complete Google sign-in');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Check for redirect results when component mounts
+  useEffect(() => {
+    console.log('Checking for Google redirect result on mount');
     handleRedirectResult();
   }, []);
-  
+
   // Listen for auth state changes
   useEffect(() => {
     console.log('Setting up auth state listener');
@@ -281,7 +323,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     error,
     setError, // Export setError to allow components to clear/set errors
-    loading
+    loading,
+    handleRedirectResult // Export to allow manual call if needed
   };
 
   return (

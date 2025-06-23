@@ -39,8 +39,9 @@ const Login = () => {
     } catch (err) {
       console.error('Login error in component:', err);
       // The error message is already set in the AuthContext
-      if (!error) {
-        setError('Failed to log in. Please check your credentials and try again.');
+      // Double check if we need to set local error
+      if (!authError) {
+        setLocalError('Failed to log in. Please check your credentials and try again.');
       }
     } finally {
       setLoading(false);
@@ -51,17 +52,25 @@ const Login = () => {
     e.preventDefault();
     setLocalError('');
     setAuthError(''); // Clear any previous auth errors
-    setLoading(true);
     
     try {
-      // Start the Google login redirect flow
-      console.log('Starting Google sign-in redirect flow');
-      await loginWithGoogle();
-      // No navigation or state changes here
-      // The redirect will happen and the page will reload
-    } catch (error) {
-      console.error('Google login redirect error:', error);
-      setLocalError(error.message || 'Failed to start Google login flow');
+      // Start Google login flow - may use popup or redirect
+      console.log('Starting Google sign-in flow');
+      setLoading(true);
+      
+      const user = await loginWithGoogle();
+      console.log('Google login response:', user ? 'Success' : 'Redirect in progress');
+      
+      // If we get a user back, it means the popup worked
+      // and we can navigate. Otherwise, the redirect is happening
+      // and the page will reload.
+      if (user) {
+        console.log('Google login successful via popup, redirecting to dashboard');
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.error('Google login error:', err);
+      setLocalError(err.message || 'Failed to sign in with Google');
       setLoading(false);
     }
   };
@@ -183,8 +192,16 @@ const Login = () => {
               <li>Go to the Firebase Console</li>
               <li>Select your project (re-notefy-539da)</li>
               <li>Navigate to Authentication → Settings → Authorized domains</li>
-              <li>Add your domain or "localhost" during development</li>
+              <li>Add <code className="bg-amber-500/30 px-1 rounded">{window.location.hostname}</code> to the list</li>
             </ol>
+          </div>
+        )}
+        
+        {error && error.includes('account-exists-with-different-credential') && (
+          <div className="mt-4 p-4 bg-amber-500/20 border border-amber-500/30 text-amber-200 rounded-xl text-sm backdrop-blur-sm">
+            <p className="font-bold">Account Already Exists:</p>
+            <p>An account with this email already exists using a different sign-in method.</p>
+            <p className="mt-2">Try logging in with the method you used when you first created your account.</p>
           </div>
         )}
         

@@ -45,9 +45,77 @@ A modern, AI-powered note-taking web application with a sleek, minimalist design
 ## Getting Started
 
 ### Prerequisites
-- Node.js 16.x or higher
+- Node.js 18.x or higher
 - npm or yarn
 - Firebase account
+
+### Environment Setup
+
+1. Copy the example environment file and update with your Firebase config:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Update the following environment variables in `.env.local` with your Firebase project credentials:
+   ```
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=your-project-id
+   VITE_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+   ```
+
+### Firebase Configuration
+
+1. Go to the [Firebase Console](https://console.firebase.google.com/)
+2. Select your project
+3. Go to Project Settings > General
+4. Under "Your apps", add a new web app if you haven't already
+5. Copy the configuration object and update your environment variables
+
+### Netlify Deployment
+
+1. Push your code to a GitHub repository
+2. Connect the repository to Netlify
+3. Set up the following environment variables in Netlify:
+   - Go to Site settings > Build & deploy > Environment
+   - Add all the Firebase environment variables from your `.env.local` file
+4. Set the build command to: `npm ci --production=false && npm run build`
+5. Set the publish directory to: `dist`
+6. Deploy your site
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Troubleshooting
+
+### Firebase Authentication Issues
+- Ensure your domain is added to Firebase Authorized Domains
+- Check browser console for any CORS or configuration errors
+- Verify that all required Firebase services are enabled in the Firebase Console
+
+### Environment Variables
+- Make sure all required environment variables are set in both `.env.local` (development) and Netlify (production)
+- Never commit `.env.local` to version control
+
+## License
+
+MIT
 - Google Generative AI API key
 
 ### Installation
