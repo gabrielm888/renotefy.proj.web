@@ -14,7 +14,14 @@ import AuthDebug from './pages/AuthDebug';
 // Context Providers
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeProvider, useTheme } from './providers/ThemeProvider';
+
+// UI Components
+import Button from './components/ui/Button';
+import Card from './components/ui/Card';
+
+// Styles
+import './styles/animations.css';
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -35,20 +42,37 @@ const ProtectedRoute = ({ children }) => {
 };
 
 // NotFound page
-const NotFound = () => (
-  <div className="min-h-screen flex items-center justify-center bg-white dark:bg-dark">
-    <div className="text-center">
-      <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
-      <p className="text-xl mb-6">Page not found</p>
-      <button 
-        onClick={() => window.location.href = '/dashboard'}
-        className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
-      >
-        Go to Dashboard
-      </button>
+const NotFound = () => {
+  const { theme } = useTheme();
+  
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-50 dark:from-dark-900 dark:to-dark-800">
+      <Card className="max-w-md mx-4 text-center p-8">
+        <h1 className="text-7xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent mb-4">
+          404
+        </h1>
+        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          Oops! The page you're looking for doesn't exist.
+        </p>
+        <div className="flex justify-center gap-4">
+          <Button 
+            onClick={() => window.history.back()}
+            variant="secondary"
+            className="flex-1 sm:flex-none"
+          >
+            Go Back
+          </Button>
+          <Button 
+            onClick={() => window.location.href = '/dashboard'}
+            className="flex-1 sm:flex-none"
+          >
+            Go to Dashboard
+          </Button>
+        </div>
+      </Card>
     </div>
-  </div>
-);
+  );
+};
 
 // Animation wrapper for routes
 const AnimatedRoutes = () => {
@@ -60,7 +84,7 @@ const AnimatedRoutes = () => {
   }, [location.pathname]);
   
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
         {/* Public routes */}
         <Route path="/" element={<Landing />} />
@@ -69,7 +93,6 @@ const AnimatedRoutes = () => {
         <Route path="/auth-debug" element={<AuthDebug />} />
         
         {/* Protected routes */}
-        
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />
@@ -98,13 +121,15 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <Router>
-      <ThemeProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <ThemeProvider>
           <NotesProvider>
-            <AnimatedRoutes />
+            <div className="min-h-screen bg-white dark:bg-dark-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+              <AnimatedRoutes />
+            </div>
           </NotesProvider>
-        </AuthProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </Router>
   );
 }
