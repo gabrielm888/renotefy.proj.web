@@ -119,7 +119,7 @@ const Register = () => {
       <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-pink-600/20 rounded-full filter blur-3xl"></div>
       
       <motion.div 
-        className="w-full max-w-md p-8 rounded-xl shadow-glass bg-gray-900/40 backdrop-blur-xl border border-white/10 relative z-10 overflow-hidden"
+        className="w-full max-w-md p-8 rounded-xl shadow-glass bg-gray-900/30 backdrop-blur-xl border border-white/10 relative z-10 overflow-hidden"
         variants={slideUp}
         initial="hidden"
         animate="visible"
@@ -154,7 +154,7 @@ const Register = () => {
             <input 
               type="text" 
               id="fullName" 
-              className="w-full rounded-xl bg-gray-800/50 border border-gray-600/50 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-sm outline-none" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
               placeholder="John Smith"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -166,7 +166,7 @@ const Register = () => {
             <input 
               type="email" 
               id="email" 
-              className="w-full rounded-xl bg-gray-800/50 border border-gray-600/50 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-sm outline-none" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
               placeholder="you@example.com"
               value={email}
               onChange={handleEmailChange}
@@ -178,7 +178,7 @@ const Register = () => {
             <input 
               type="text" 
               id="username" 
-              className="w-full rounded-xl bg-gray-800/50 border border-gray-600/50 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-sm outline-none" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
               placeholder="username123"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -190,7 +190,7 @@ const Register = () => {
             <input 
               type="password" 
               id="password" 
-              className="w-full rounded-xl bg-gray-800/50 border border-gray-600/50 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-sm outline-none" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
               placeholder="••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -202,7 +202,7 @@ const Register = () => {
             <input 
               type="password" 
               id="confirmPassword" 
-              className="w-full rounded-xl bg-gray-800/50 border border-gray-600/50 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-sm outline-none" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
               placeholder="••••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -214,7 +214,7 @@ const Register = () => {
             disabled={loading}
             className={classNames(
               "w-full relative overflow-hidden text-white font-medium py-3.5 px-4 rounded-xl flex justify-center items-center",
-              "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600",
+              "bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700",
               "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-70",
               "shadow-glow-primary transition-all duration-300"
             )}

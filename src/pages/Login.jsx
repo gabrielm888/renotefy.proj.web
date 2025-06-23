@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion } from 'framer-motion';
+import { classNames } from '../utils/classNames';
+import { fadeIn, slideUp, staggerContainer } from '../utils/animations';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -77,77 +79,107 @@ const Login = () => {
 
   return (
     <motion.div 
-      className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-gray-900 via-gray-950 to-black dark:bg-dark"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-purple-950/30 to-gray-950"
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
     >
-      {/* Background accents */}
-      <div className="absolute top-20 left-1/4 w-72 h-72 bg-blue-500/20 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-pink-600/20 rounded-full filter blur-3xl"></div>
+      {/* Background accents with glow effects */}
+      <div className="absolute top-20 left-1/4 w-72 h-72 bg-blue-500/30 rounded-full filter blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-pink-600/30 rounded-full filter blur-3xl animate-pulse-slow"></div>
+      <div className="absolute top-1/3 right-1/3 w-40 h-40 bg-indigo-500/20 rounded-full filter blur-3xl animate-float"></div>
       
-      <div className="relative bg-white/10 dark:bg-gray-900/40 backdrop-blur-xl rounded-2xl p-8 shadow-2xl max-w-md w-full border border-white/20 dark:border-gray-800/50">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold mb-1">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500 font-playfair">Renotefy</span>
-          </h2>
-          <p className="text-gray-100 font-medium">Sign in to your account</p>
-        </div>
+      <motion.div 
+        className="w-full max-w-md p-8 rounded-xl shadow-glass bg-gray-900/30 backdrop-blur-xl border border-white/10 relative z-10 overflow-hidden"
+        variants={slideUp}
+      >
+        {/* Glass shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-white/10 to-transparent pointer-events-none"></div>
+        
+        <motion.div className="text-center mb-6" variants={staggerContainer} initial="hidden" animate="visible">
+          <motion.h1 
+            className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent pb-1"
+            variants={fadeIn}
+          >
+            Renotefy
+          </motion.h1>
+          <motion.p className="text-gray-200 mt-2" variants={fadeIn}>Sign in to your account</motion.p>
+        </motion.div>
         
         {error && (
           <motion.div 
-            className="bg-red-500/20 border border-red-500/30 text-red-200 px-4 py-3 rounded-xl mb-4 flex items-start backdrop-blur-sm"
+            className="mb-4 p-3 bg-red-500/20 border border-red-500/30 rounded-lg backdrop-blur-sm"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <svg className="w-5 h-5 mr-2 mt-0.5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-            </svg>
-            <div>{error}</div>
+            <p className="text-red-200 text-sm font-medium">{error}</p>
           </motion.div>
         )}
         
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-100 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
+          <motion.div className="mb-5" variants={fadeIn}>
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-200">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
+              placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 bg-white/10 backdrop-blur-sm text-white placeholder-gray-400"
-              placeholder="you@example.com"
             />
-          </div>
+          </motion.div>
           
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-1">
-              <label className="block text-sm font-medium text-gray-100">
+          <motion.div className="mb-6" variants={fadeIn}>
+            <div className="flex justify-between items-center mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200">
                 Password
               </label>
-              <Link to="/forgot-password" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
-                Forgot password?
+              <Link to="/forgot-password" className="text-xs text-blue-400 hover:text-blue-300 transition-colors hover:underline">
+                Forgot Password?
               </Link>
             </div>
-            <input
-              type="password"
+            <input 
+              type="password" 
+              id="password" 
+              className="w-full rounded-xl bg-gray-800/50 border border-white/20 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-400 focus:border-blue-400 px-4 py-3 backdrop-blur-sm transition-all duration-200 shadow-inner outline-none" 
+              placeholder="••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 bg-white/10 backdrop-blur-sm text-white placeholder-gray-400"
-              placeholder="••••••••••••"
             />
-          </div>
+          </motion.div>
           
           <motion.button 
             type="submit" 
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium shadow-lg hover:shadow-blue-500/25 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4 relative overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className={classNames(
+              "w-full relative overflow-hidden text-white font-medium py-3.5 px-4 rounded-xl flex justify-center items-center mb-4",
+              "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600",
+              "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-70",
+              "shadow-glow-primary transition-all duration-300"
+            )}
+            variants={fadeIn}
+            animate={{ 
+              boxShadow: loading 
+                ? "0 0 0 rgba(59, 130, 246, 0)" 
+                : ["0 0 0 rgba(59, 130, 246, 0)", "0 0 24px rgba(59, 130, 246, 0.6)", "0 0 0 rgba(59, 130, 246, 0)"] 
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "loop"
+            }}
+            whileHover={{ 
+              scale: 1.03, 
+              boxShadow: "0 15px 25px -5px rgba(59, 130, 246, 0.6)",
+              transition: { duration: 0.2, ease: "easeOut" } 
+            }}
+            whileTap={{ 
+              scale: 0.97,
+              boxShadow: "0 5px 15px -5px rgba(59, 130, 246, 0.5)"
+            }}
           >
             {loading ? (
               <>
@@ -163,21 +195,29 @@ const Login = () => {
           </motion.button>
         </form>
         
-        <div className="relative flex py-5 items-center w-full">
+        <motion.div 
+          className="relative flex py-5 items-center w-full"
+          variants={fadeIn}
+        >
           <div className="flex items-center justify-center w-full">
-            <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
-            <span className="mx-4 text-gray-500 text-sm font-medium">or</span>
-            <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+            <div className="flex-grow border-t border-gray-700/50"></div>
+            <span className="mx-4 text-gray-400 text-sm font-medium">or</span>
+            <div className="flex-grow border-t border-gray-700/50"></div>
           </div>
-        </div>
+        </motion.div>
 
         <motion.button 
           type="button" 
           onClick={handleGoogleLogin}
           disabled={loading}
-          className="w-full flex items-center justify-center py-3 px-4 border border-white/30 rounded-xl shadow-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all font-medium text-white"
+          className="w-full flex items-center justify-center py-3.5 px-4 border border-white/20 rounded-xl shadow-glass bg-white/10 hover:bg-white/15 backdrop-blur-sm transition-all font-medium text-white"
           title="Sign in with your Google account"
-          whileHover={{ scale: 1.02 }}
+          variants={fadeIn}
+          whileHover={{ 
+            scale: 1.02, 
+            backgroundColor: "rgba(255,255,255,0.15)",
+            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)"
+          }}
           whileTap={{ scale: 0.98 }}
         >
           <img src="/google-icon.svg" alt="Google" className="w-5 h-5 mr-3" />
@@ -205,13 +245,19 @@ const Login = () => {
           </div>
         )}
         
-        <p className="mt-8 text-center text-sm text-gray-300">
+        <motion.p 
+          className="mt-8 text-center text-sm text-gray-300"
+          variants={fadeIn}
+        >
           Don't have an account?{' '}
-          <Link to="/register" className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+          <Link 
+            to="/register" 
+            className="font-medium text-blue-400 hover:text-blue-300 transition-colors hover:underline"
+          >
             Create an account
           </Link>
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </motion.div>
   );
 };
