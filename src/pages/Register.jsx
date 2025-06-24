@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/glassmorph.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion } from 'framer-motion';
@@ -113,31 +114,11 @@ const Register = () => {
       variants={fadeIn}
     >
       {/* Enhanced background accents with stronger glow effects */}
-      <motion.div 
-        className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/40 rounded-full filter blur-3xl"
-        animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.4, 0.6, 0.4]
-        }}
-        transition={{ 
-          duration: 8,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }}
-      ></motion.div>
-      <motion.div 
-        className="absolute -bottom-10 right-1/4 w-96 h-96 bg-purple-600/40 rounded-full filter blur-3xl"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ 
-          duration: 10,
-          repeat: Infinity,
-          repeatType: "reverse",
-          delay: 2
-        }}
-      ></motion.div>
+      <div className="blob-bg absolute top-20 left-1/4 w-96 h-96 bg-blue-500/40 rounded-full filter blur-3xl pulse-animate"></div>
+      
+      <div className="blob-bg absolute -bottom-10 right-1/4 w-96 h-96 bg-purple-600/40 rounded-full filter blur-3xl float-animate"></div>
+      
+      <div className="blob-bg absolute top-1/3 right-1/3 w-64 h-64 bg-indigo-500/40 rounded-full filter blur-3xl pulse-animate" style={{animationDelay: '2s'}}></div>
       <motion.div 
         className="absolute top-1/3 right-1/3 w-64 h-64 bg-indigo-500/30 rounded-full filter blur-3xl"
         animate={{ 
@@ -152,12 +133,10 @@ const Register = () => {
       ></motion.div>
       
       <motion.div 
-        className="w-full max-w-md p-8 rounded-xl shadow-glass bg-gray-900/30 backdrop-blur-xl border border-white/10 relative z-10 overflow-hidden"
-        variants={slideUp}
+        className="w-full max-w-md p-8 rounded-xl glassmorphism-card glass-shine relative z-10 overflow-hidden"
+        variants={staggerContainer}
         initial="hidden"
         animate="visible"
-        whileHover={{ boxShadow: "0 0 40px 5px rgba(120, 120, 255, 0.15)" }}
-        transition={{ duration: 0.3 }}
       >
         {/* Enhanced glass shine effect */}
         <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-white/5 to-transparent pointer-events-none"></div>

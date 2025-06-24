@@ -6,6 +6,7 @@ import App from './App';
 // Styles
 import './index.css';
 import './styles/animations.css';
+import './styles/glassmorph.css';
 
 // Create root and render app
 const root = createRoot(document.getElementById('root'));

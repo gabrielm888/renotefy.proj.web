@@ -17,7 +17,7 @@
 # Handle Firebase auth callbacks
 [[redirects]]
   from = "/__/auth/handler"
-  to = "https://__REPLACE_WITH_YOUR_FIREBASE_AUTH_DOMAIN/__/auth/handler"
+  to = "https://re-notefy-539da.firebaseapp.com/__/auth/handler"
   status = 200
 
 # Security headers

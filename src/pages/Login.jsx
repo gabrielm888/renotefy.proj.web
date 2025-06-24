@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { classNames } from '../utils/classNames';
 import { fadeIn, slideUp, staggerContainer } from '../utils/animations';
 
+// Import explicit glassmorphism styles
+import '../styles/glassmorph.css';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -86,49 +89,19 @@ const Login = () => {
     >
       {/* Background accents with glow effects */}
       {/* Enhanced background accents with stronger glow effects */}
-      <motion.div 
-        className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/40 rounded-full filter blur-3xl"
-        animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.4, 0.6, 0.4]
-        }}
-        transition={{ 
-          duration: 8,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }}
-      ></motion.div>
-      <motion.div 
-        className="absolute -bottom-10 right-1/4 w-96 h-96 bg-purple-600/40 rounded-full filter blur-3xl"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ 
-          duration: 10,
-          repeat: Infinity,
-          repeatType: "reverse",
-          delay: 2
-        }}
-      ></motion.div>
-      <motion.div 
-        className="absolute top-1/3 right-1/3 w-64 h-64 bg-indigo-500/30 rounded-full filter blur-3xl"
-        animate={{ 
-          y: [-10, 10, -10],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{ 
-          duration: 12,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }}
-      ></motion.div>
+      <div className="blob-bg absolute top-20 left-1/4 w-96 h-96 bg-blue-500/40 rounded-full filter blur-3xl pulse-animate"></div>
+      
+      <div className="blob-bg absolute -bottom-10 right-1/4 w-96 h-96 bg-purple-600/40 rounded-full filter blur-3xl float-animate"></div>
+      
+      <div className="blob-bg absolute top-1/3 right-1/3 w-64 h-64 bg-indigo-500/40 rounded-full filter blur-3xl pulse-animate" style={{animationDelay: '2s'}}></div>
+      
+      <div className="blob-bg absolute bottom-1/3 left-20 w-72 h-72 bg-blue-600/30 rounded-full filter blur-3xl float-animate" style={{animationDelay: '3s'}}></div>
       
       <motion.div 
-        className="w-full max-w-md p-8 rounded-xl shadow-glass bg-gray-900/30 backdrop-blur-xl border border-white/10 relative z-10 overflow-hidden"
-        variants={slideUp}
-        whileHover={{ boxShadow: "0 0 40px 5px rgba(120, 120, 255, 0.15)" }}
-        transition={{ duration: 0.3 }}
+        className="w-full max-w-md p-8 rounded-xl glassmorphism-card glass-shine relative z-10 overflow-hidden"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
       >
         {/* Glass shine effect */}
         {/* Enhanced glass shine effect */}
