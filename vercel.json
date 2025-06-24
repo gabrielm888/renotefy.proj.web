@@ -12,7 +12,7 @@
   "routes": [
     {
       "src": "/__/auth/handler",
-      "dest": "https://YOUR_FIREBASE_PROJECT_ID.firebaseapp.com/__/auth/handler"
+      "dest": "https://re-notefy-539da.firebaseapp.com/__/auth/handler"
     },
     {
       "src": "/(.*\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|mp4|webm|wav|mp3|m4a|aac|oga|wasm|map|json|webmanifest))$",
@@ -80,7 +80,7 @@
   "rewrites": [
     {
       "source": "/__/auth/(.*)",
-      "destination": "https://YOUR_FIREBASE_PROJECT_ID.firebaseapp.com/__/auth/$1"
+      "destination": "https://re-notefy-539da.firebaseapp.com/__/auth/$1"
     }
   ]
 }
